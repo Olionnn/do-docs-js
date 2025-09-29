@@ -1,0 +1,30 @@
+name: Generate Docs Manifest
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install deps
+        run: npm install
+
+      - name: Generate manifest
+        run: npm run generate
+
+      - name: Commit & Push manifest.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add manifest.json
+          git commit -m "auto: update manifest" || echo "No changes to commit"
+          git push

@@ -1,0 +1,18 @@
+{
+  "name": "docs-site",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Mini docs site generated from content/",
+  "main": "app.js",
+  "scripts": {
+    "generate": "node generate-docs.mjs",
+    "serve": "npx http-server -p 8080 -c-1 .",
+    "dev": "npm run generate && npm run serve",
+    "watch": "node generate-docs.mjs --watch"
+  },
+  "devDependencies": {
+    "chokidar": "^3.6.0"
+  },
+  "author": "Olionnn",
+  "license": "ISC"
+}
