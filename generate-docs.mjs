@@ -23,7 +23,7 @@ function walk(dir) {
       files.push({
         type: 'dir',
         name: e.name,
-        path: `/${rel}/`,
+        path: `${rel}/`,
         children: walk(full)
       });
     } else {
@@ -32,7 +32,7 @@ function walk(dir) {
         files.push({
           type: 'file',
           name: e.name,
-          path: `/${rel}`
+          path: `${rel}`
         });
       }
     }

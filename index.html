@@ -117,6 +117,28 @@
       const res = await fetch('manifest.json', {cache:'no-store'});
       if(!res.ok){ $('#content').textContent='manifest.json tidak ditemukan.'; return; }
       MANIFEST = await res.json();
+      // Normalize manifest: produce MANIFEST.files as flat array without leading slash
+      function treeToFiles(tree){
+        const out = [];
+        (tree || []).forEach(node => {
+          if(node.type === 'file'){
+            const p = node.path?.startsWith('/') ? node.path.slice(1) : node.path;
+            out.push(p);
+          } else if(node.children){
+            out.push(...treeToFiles(node.children));
+          }
+        });
+        return out;
+      }
+      if(!Array.isArray(MANIFEST.files)){
+        MANIFEST.files = treeToFiles(MANIFEST.tree || []);
+      } else {
+        // normalize existing files
+        MANIFEST.files = MANIFEST.files.map(p => p?.startsWith('/') ? p.slice(1) : p);
+      }
+      // normalize defaultDoc as well (remove leading slash)
+      if(MANIFEST.defaultDoc && MANIFEST.defaultDoc.startsWith('/')) MANIFEST.defaultDoc = MANIFEST.defaultDoc.slice(1);
+
       $('#meta').textContent = `Generated: ${new Date(MANIFEST.generatedAt).toLocaleString()}`;
       FILTERED = MANIFEST.files.slice();
       renderList(FILTERED);
