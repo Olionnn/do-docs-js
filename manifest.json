@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2025-09-29T08:16:56.031Z",
+  "root": "/content/",
+  "defaultDoc": "/content/README.md",
+  "tree": [
+    {
+      "type": "dir",
+      "name": "guide",
+      "path": "/content/guide/",
+      "children": [
+        {
+          "type": "file",
+          "name": "install.md",
+          "path": "/content/guide/install.md",
+          "title": "Install"
+        },
+        {
+          "type": "file",
+          "name": "README.md",
+          "path": "/content/guide/README.md",
+          "title": "README"
+        }
+      ],
+      "title": "guide"
+    },
+    {
+      "type": "file",
+      "name": "getting-started.md",
+      "path": "/content/getting-started.md",
+      "title": "Getting started"
+    },
+    {
+      "type": "file",
+      "name": "README.md",
+      "path": "/content/README.md",
+      "title": "README"
+    }
+  ]
+}
