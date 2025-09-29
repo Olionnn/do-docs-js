@@ -2,7 +2,7 @@ name: Generate Docs Manifest
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build:
