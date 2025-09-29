@@ -2,7 +2,7 @@ name: Generate manifest.json (PR)
 
 on:
   push:
-    branches: [ "master", "main" ]
+    branches: [ "master"]
     paths:
       - "**/*.md"
       - ".github/workflows/generate-manifest.yml"
