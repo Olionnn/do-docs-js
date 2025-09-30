@@ -9,9 +9,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <style>
-    .prose pre{overflow:auto;border-radius:.5rem;padding:1rem}
-    .prose code{font-family:ui-monospace,Menlo,Consolas,monospace}
+    .prose pre{overflow:auto;border-radius:.5rem;padding:1rem;background:#1e293b;border:1px solid #334155}
+    .prose code{font-family:ui-monospace,Menlo,Consolas,monospace;background:#1e293b;padding:0.125rem 0.25rem;border-radius:0.25rem;font-size:0.875em}
+    .prose pre code{background:none;padding:0;border:none}
+    .prose h1,.prose h2,.prose h3,.prose h4,.prose h5,.prose h6{margin-top:1.5em;margin-bottom:0.5em;color:#f1f5f9;border-bottom:1px solid #334155;padding-bottom:0.25em}
+    .prose h1{font-size:2em}
+    .prose h2{font-size:1.5em}
+    .prose h3{font-size:1.25em}
+    .prose p{margin-bottom:1em;color:#cbd5e1;line-height:1.6}
+    .prose ul,.prose ol{margin-bottom:1em;padding-left:1.5em}
+    .prose li{margin-bottom:0.25em}
+    .prose blockquote{border-left:4px solid #475569;padding-left:1em;margin:1em 0;color:#94a3b8;font-style:italic;background:#0f172a;padding:1em;border-radius:0.5rem}
+    .prose table{border-collapse:collapse;width:100%;margin:1em 0;border:1px solid #334155}
+    .prose th,.prose td{border:1px solid #334155;padding:0.5em;text-align:left}
+    .prose th{background:#1e293b;font-weight:600}
+    .prose a{color:#60a5fa;text-decoration:underline}
+    .prose a:hover{color:#93c5fd}
+    .prose hr{border:0;border-top:1px solid #334155;margin:2em 0}
+    .prose strong{font-weight:600;color:#f1f5f9}
+    .prose em{font-style:italic;color:#cbd5e1}
     .active{background:rgba(99,102,241,.15)}
+    #content{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
+    #content *{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
   </style>
 </head>
 <body class="bg-slate-950 text-slate-200">
@@ -93,8 +112,27 @@
         const res = await fetch(p, {cache:'no-store'});
         if(!res.ok) throw new Error('HTTP '+res.status);
         const md = await res.text();
-        const html = marked.parse(md, {mangle:false, headerIds:true});
+        const html = marked.parse(md, {mangle:false, headerIds:true, breaks:true, gfm:true});
         $('#content').innerHTML = html;
+        $('#content').querySelectorAll('pre').forEach(pre=>{
+          const code = pre.querySelector('code');
+          if(code){
+            const btn = document.createElement('button');
+            btn.textContent = '📋 Copy';
+            btn.className = 'absolute top-2 right-2 bg-slate-700 text-slate-200 px-2 py-1 rounded text-xs hover:bg-slate-600';
+            btn.onclick = async ()=>{
+              try{
+                await navigator.clipboard.writeText(code.textContent);
+                btn.textContent = '✅ Copied';
+                setTimeout(()=>btn.textContent='📋 Copy',2000);
+              }catch(e){
+                alert('Failed to copy');
+              }
+            };
+            pre.style.position = 'relative';
+            pre.appendChild(btn);
+          }
+        });
         $('#content').querySelectorAll('pre code').forEach(b=>hljs.highlightElement(b));
       }catch(e){
         $('#content').innerHTML = `<div class="text-red-400">Gagal memuat <code>${p}</code>: ${e.message}</div>`;
