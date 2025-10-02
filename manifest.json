@@ -1,8 +1,28 @@
 {
-  "generatedAt": "2025-09-30T03:22:05.168Z",
+  "generatedAt": "2025-10-02T22:55:00.890Z",
   "root": "/content/",
   "defaultDoc": "content/README.md",
   "tree": [
+    {
+      "type": "dir",
+      "name": "ai-tools",
+      "path": "content/ai-tools/",
+      "children": [
+        {
+          "type": "file",
+          "name": "prompt-engineering-tutorial.md",
+          "path": "content/ai-tools/prompt-engineering-tutorial.md",
+          "title": "Prompt engineering tutorial"
+        },
+        {
+          "type": "file",
+          "name": "searching-tutorial.md",
+          "path": "content/ai-tools/searching-tutorial.md",
+          "title": "Searching tutorial"
+        }
+      ],
+      "title": "ai-tools"
+    },
     {
       "type": "dir",
       "name": "electron-js",
@@ -49,6 +69,44 @@
     },
     {
       "type": "dir",
+      "name": "git",
+      "path": "content/git/",
+      "children": [
+        {
+          "type": "file",
+          "name": "best-practices.md",
+          "path": "content/git/best-practices.md",
+          "title": "Best practices"
+        },
+        {
+          "type": "file",
+          "name": "git-tutorial.md",
+          "path": "content/git/git-tutorial.md",
+          "title": "Git tutorial"
+        },
+        {
+          "type": "file",
+          "name": "gitignore-examples.md",
+          "path": "content/git/gitignore-examples.md",
+          "title": "Gitignore examples"
+        },
+        {
+          "type": "file",
+          "name": "team-workflow.md",
+          "path": "content/git/team-workflow.md",
+          "title": "Team workflow"
+        },
+        {
+          "type": "file",
+          "name": "troubleshooting.md",
+          "path": "content/git/troubleshooting.md",
+          "title": "Troubleshooting"
+        }
+      ],
+      "title": "git"
+    },
+    {
+      "type": "dir",
       "name": "laravel",
       "path": "content/laravel/",
       "children": [
@@ -84,6 +142,74 @@
         }
       ],
       "title": "laravel"
+    },
+    {
+      "type": "dir",
+      "name": "nodejs-api",
+      "path": "content/nodejs-api/",
+      "children": [
+        {
+          "type": "file",
+          "name": "authentication.md",
+          "path": "content/nodejs-api/authentication.md",
+          "title": "Authentication"
+        },
+        {
+          "type": "file",
+          "name": "controllers.md",
+          "path": "content/nodejs-api/controllers.md",
+          "title": "Controllers"
+        },
+        {
+          "type": "file",
+          "name": "database-config.md",
+          "path": "content/nodejs-api/database-config.md",
+          "title": "Database config"
+        },
+        {
+          "type": "file",
+          "name": "deployment.md",
+          "path": "content/nodejs-api/deployment.md",
+          "title": "Deployment"
+        },
+        {
+          "type": "file",
+          "name": "express-setup.md",
+          "path": "content/nodejs-api/express-setup.md",
+          "title": "Express setup"
+        },
+        {
+          "type": "file",
+          "name": "models-migrations.md",
+          "path": "content/nodejs-api/models-migrations.md",
+          "title": "Models migrations"
+        },
+        {
+          "type": "file",
+          "name": "prerequisite.md",
+          "path": "content/nodejs-api/prerequisite.md",
+          "title": "Prerequisite"
+        },
+        {
+          "type": "file",
+          "name": "routes.md",
+          "path": "content/nodejs-api/routes.md",
+          "title": "Routes"
+        },
+        {
+          "type": "file",
+          "name": "setup-project.md",
+          "path": "content/nodejs-api/setup-project.md",
+          "title": "Setup project"
+        },
+        {
+          "type": "file",
+          "name": "testing.md",
+          "path": "content/nodejs-api/testing.md",
+          "title": "Testing"
+        }
+      ],
+      "title": "nodejs-api"
     },
     {
       "type": "dir",
@@ -212,9 +338,27 @@
         },
         {
           "type": "file",
+          "name": "debugging-troubleshooting.md",
+          "path": "content/react-native/debugging-troubleshooting.md",
+          "title": "Debugging troubleshooting"
+        },
+        {
+          "type": "file",
           "name": "instalasi-project.md",
           "path": "content/react-native/instalasi-project.md",
           "title": "Instalasi project"
+        },
+        {
+          "type": "file",
+          "name": "navigation-state-management.md",
+          "path": "content/react-native/navigation-state-management.md",
+          "title": "Navigation state management"
+        },
+        {
+          "type": "file",
+          "name": "prebuild-setup.md",
+          "path": "content/react-native/prebuild-setup.md",
+          "title": "Prebuild setup"
         },
         {
           "type": "file",
@@ -239,6 +383,18 @@
           "name": "struktur-folder.md",
           "path": "content/react-native/struktur-folder.md",
           "title": "Struktur folder"
+        },
+        {
+          "type": "file",
+          "name": "update-android-api.md",
+          "path": "content/react-native/update-android-api.md",
+          "title": "Update android api"
+        },
+        {
+          "type": "file",
+          "name": "update-react-native.md",
+          "path": "content/react-native/update-react-native.md",
+          "title": "Update react native"
         }
       ],
       "title": "react-native"

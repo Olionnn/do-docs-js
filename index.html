@@ -1,186 +1,286 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" class="h-full">
 <head>
-  <meta chars      <article class="max-w-4xl mx-auto px-4 py-6 prose prose-invert max-w-none leading-relaxed">"utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Docs — Markdown Reader (Responsive)</title>
+
+  <!-- Tailwind CSS (CDN) - OK for docs/demo site -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#6366F1' },     // indigo-500
+            surface: {
+              light: '#f8fafc',                 // slate-50-ish
+              dark: '#0b1220'                   // custom deep slate
+            }
+          },
+          boxShadow: {
+            soft: '0 4px 18px rgba(0,0,0,.08)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GitHub-like Markdown CSS (fidelity .md) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+
+  <!-- Highlight.js themes (auto switch) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme-light">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-theme-dark" disabled>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Marked -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Base untuk link/gambar relatif -->
+  <base id="base-href" href="./">
+
   <style>
-    .prose pre{overflow:auto;border-radius:.5rem;padding:1rem;background:#1e293b;border:1px solid #334155}
-    .prose code{font-family:ui-monospace,Menlo,Consolas,monospace;background:#1e293b;padding:0.125rem 0.25rem;border-radius:0.25rem;font-size:0.875em}
-    .prose pre code{background:none;padding:0;border:none}
-    .prose h1,.prose h2,.prose h3,.prose h4,.prose h5,.prose h6{margin-top:1.5em;margin-bottom:0.5em;color:#f1f5f9;border-bottom:1px solid #334155;padding-bottom:0.25em}
-    .prose h1{font-size:2em}
-    .prose h2{font-size:1.5em}
-    .prose h3{font-size:1.25em}
-    .prose p{margin-bottom:1em;color:#cbd5e1;line-height:1.6}
-    .prose ul,.prose ol{margin-bottom:1em;padding-left:1.5em}
-    .prose li{margin-bottom:0.25em}
-    .prose blockquote{border-left:4px solid #475569;padding-left:1em;margin:1em 0;color:#94a3b8;font-style:italic;background:#0f172a;padding:1em;border-radius:0.5rem}
-    .prose table{border-collapse:collapse;width:100%;margin:1em 0;border:1px solid #334155}
-    .prose th,.prose td{border:1px solid #334155;padding:0.5em;text-align:left}
-    .prose th{background:#1e293b;font-weight:600}
-    .prose a{color:#60a5fa;text-decoration:underline}
-    .prose a:hover{color:#93c5fd}
-    .prose hr{border:0;border-top:1px solid #334155;margin:2em 0}
-    .prose strong{font-weight:600;color:#f1f5f9}
-    .prose em{font-style:italic;color:#cbd5e1}
-    html{scroll-behavior:smooth}
-    .transition-all{transition:all 0.2s ease}
-    .rotate-90{transform:rotate(90deg)}
-    .active{background:rgba(99,102,241,.15)}
-    #content{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
-    #content *{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
+    :root { color-scheme: light dark; }
+    /* Markdown container: line-length nyaman di mobile & desktop */
+    .markdown-body { box-sizing: border-box; min-width: 200px; max-width: 820px; margin: 0 auto; padding: 18px; }
+    @media (min-width: 768px) { .markdown-body { padding: 24px; } }
+    @media (min-width: 1280px){ .markdown-body { padding: 28px; } }
+
+    /* Tooltip kecil (untuk tombol copy anchor) */
+    .tooltip { position: relative; }
+    .tooltip[data-tip]:before {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%; transform: translateX(-50%);
+      bottom: 125%; white-space: nowrap;
+      background: rgba(17,24,39,.92); color: #fff; font-size: 12px;
+      padding: 4px 8px; border-radius: 6px; opacity: 0; pointer-events: none; transition: .15s ease;
+    }
+    .tooltip:hover:before { opacity: 1; }
+
+    /* Safe area iOS */
+    .sa { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-200">
-  <div class="flex h-screen">
-    <aside class="w-72 shrink-0 border-r border-white/10 bg-slate-900/60 backdrop-blur">
-      <div class="p-4 border-b border-white/10">
-        <div class="text-xl font-bold">📚 Docs</div>
-        <div id="meta" class="text-xs text-slate-400 mt-1"></div>
-        <input id="search" placeholder="Cari…" class="mt-3 w-full rounded bg-slate-800/70 border border-white/10 px-3 py-2 text-sm outline-none">
-        <button id="themeToggle" class="mt-2 w-full bg-slate-700 text-slate-200 px-3 py-2 rounded text-sm hover:bg-slate-600 transition-colors">🌙 Dark Mode</button>
+<body class="h-full bg-surface-light text-slate-900 dark:bg-surface-dark dark:text-slate-100 selection:bg-brand/20 selection:text-inherit">
+  <!-- Reading progress -->
+  <div class="fixed inset-x-0 top-0 z-50 sa">
+    <div class="h-1 bg-brand/15 dark:bg-brand/25">
+      <div id="progress" class="h-1 bg-brand transition-[width] duration-150 ease-linear w-0"></div>
+    </div>
+  </div>
+
+  <!-- Topbar (mobile-first) -->
+  <header class="sticky top-0 z-40 sa border-b border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-slate-900/60 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex items-center gap-2">
+      <!-- Menu button (mobile) -->
+      <button id="btnOpenNav" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-brand/50 md:hidden" aria-label="Buka menu">
+        <svg class="w-6 h-6 text-slate-700 dark:text-slate-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <!-- Brand -->
+      <div class="flex items-center gap-2">
+        <svg class="w-6 h-6 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 19.5Z"/>
+        </svg>
+        <span class="font-semibold">Docs</span>
       </div>
-      <nav id="list" class="p-2 overflow-y-auto h-[calc(100vh-5.5rem)]"></nav>
+
+      <!-- Search (mobile inline) -->
+      <div class="relative ml-auto md:ml-6 flex-1 md:flex-none md:w-80">
+        <input id="search" placeholder="Cari dokumen…" class="w-full rounded-lg border border-slate-300 dark:border-white/10 bg-white/80 dark:bg-slate-800/70 px-9 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/40">
+        <svg class="w-4 h-4 absolute left-2.5 top-2.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-1">
+        <button id="themeToggle" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-brand/50" title="Ganti tema">
+          <svg id="icon-sun" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93 6.34 6.34m11.32 11.32 1.41 1.41M2 12h2m16 0h2m-3.07-7.07L16.66 6.34M6.34 17.66 4.93 19.07"/></svg>
+          <svg id="icon-moon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Layout -->
+  <div class="h-[calc(100vh-48px)] md:h-[calc(100vh-52px)] grid grid-cols-12">
+    <!-- Sidebar (desktop) -->
+    <aside class="hidden md:block col-span-3 xl:col-span-2 border-r border-slate-200/80 dark:border-white/10 bg-white/60 dark:bg-slate-900/40">
+      <div class="p-4">
+        <p id="meta" class="text-xs text-slate-500 dark:text-slate-400 mb-3"></p>
+        <nav id="list" class="space-y-3 h-[calc(100vh-9.5rem)] overflow-y-auto pr-1"></nav>
+      </div>
     </aside>
-    <main class="flex-1 overflow-y-auto">
-      <header class="sticky top-0 z-10 border-b border-white/10 bg-slate-900/70 backdrop-blur">
-        <div class="max-w-4xl mx-auto px-4 py-3 text-sm text-slate-400" id="crumb"></div>
-      </header>
-      <article class="max-w-4xl mx-auto px-4 py-6">
-        <div id="content" class="prose prose-invert max-w-none">Memuat…</div>
-      </article>
+
+    <!-- Content -->
+    <main class="col-span-12 md:col-span-9 xl:col-span-10 overflow-y-auto">
+      <!-- Breadcrumb -->
+      <div class="border-b border-slate-200/80 dark:border-white/10 bg-white/60 dark:bg-slate-900/40">
+        <div class="max-w-4xl mx-auto px-4 py-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 18l6-6-6-6"/></svg>
+          <span id="crumb" class="truncate"></span>
+        </div>
+      </div>
+
+      <article class="markdown-body max-w-4xl mx-auto" id="content">Memuat…</article>
+
+      <!-- Back to top -->
+      <button id="backToTop" class="fixed bottom-5 right-5 md:right-6 opacity-0 pointer-events-none transition-all rounded-full shadow-soft border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 p-3 hover:bg-slate-50 dark:hover:bg-slate-700" title="Kembali ke atas">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="m18 15-6-6-6 6"/></svg>
+      </button>
     </main>
+  </div>
+
+  <!-- Mobile Drawers -->
+  <!-- Sidebar Drawer -->
+  <div id="navDrawer" class="fixed inset-0 z-50 hidden">
+    <div id="navOverlay" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+    <div class="absolute left-0 top-0 h-full w-[84%] max-w-xs bg-white dark:bg-slate-900 border-r border-slate-200/80 dark:border-white/10 p-4 pt-5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <svg class="w-6 h-6 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 19.5Z"/>
+          </svg>
+          <span class="font-semibold">Docs</span>
+        </div>
+        <button id="btnCloseNav" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Tutup menu">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 18 18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p id="metaMobile" class="text-xs text-slate-500 dark:text-slate-400 mb-3"></p>
+      <nav id="listMobile" class="space-y-3 overflow-y-auto max-h-[calc(100vh-10rem)] pr-1"></nav>
+    </div>
   </div>
 
   <script>
     const $ = s => document.querySelector(s);
+    const baseEl = $('#base-href');
     let MANIFEST = null;
     let FILTERED = [];
 
+    const icons = {
+      folder: `<svg class="w-4 h-4 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>`,
+      file: `<svg class="w-4 h-4 text-slate-500 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>`,
+      link: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M10 13a5 5 0 0 0 7.07 0l3.54-3.54a5 5 0 0 0-7.07-7.07L12 3"/><path d="M14 11a5 5 0 0 0-7.07 0L3.39 14.54a5 5 0 0 0 7.07 7.07L12 21"/></svg>`,
+      check: `<svg class="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 6 9 17l-5-5"/></svg>`
+    };
+
+    // —— Utils
     function titleFromPath(p){
       const name = p.split('/').pop();
       return name.replace(/\.md$/i,'').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
     }
-
     function groupByDir(files){
       const tree = {};
       files.forEach(p=>{
-        const segs = p.split('/');
-        const dir = segs.length>1 ? segs.slice(0,-1).join('/') : '';
+        // Strip content/ prefix
+        const cleanPath = p.replace(/^content\//, '');
+        const segs = cleanPath.split('/');
+        const dir = segs.length>1 ? segs.slice(0,-1).join('/') : 'root';
         (tree[dir] ||= []).push(p);
       });
       return tree;
     }
+    function highlightActive(){
+      const hash = decodeURIComponent(location.hash.replace(/^#/,''));
+      document.querySelectorAll('[data-path]').forEach(a=>{
+        const active = a.dataset.path === hash;
+        a.classList.toggle('bg-brand/10', active);
+        a.classList.toggle('text-brand', active);
+        a.classList.toggle('font-semibold', active);
+      });
+    }
+    function setBaseFor(path){
+      // Always use ./ since all files are served from root
+      baseEl.setAttribute('href', './');
+    }
 
-    function renderList(files){
-      const list = $('#list');
-      list.innerHTML = '';
+    // Marked setup
+    marked.setOptions({ gfm: true, breaks: false, headerIds: true, mangle: false, smartLists: true, smartypants: false });
+
+    // —— Sidebar list renderer (desktop & mobile)
+    function renderListInto(container, files){
+      container.innerHTML = '';
       const tree = groupByDir(files);
-
       Object.keys(tree).sort().forEach(dir=>{
-        if(dir === '') return; // skip root
-        const wrapper = document.createElement('div');
-        wrapper.className = 'mb-2';
-        const header = document.createElement('div');
-        header.className = 'flex items-center px-2 py-1 text-xs uppercase tracking-wide text-slate-400 hover:text-slate-300 cursor-pointer transition-colors';
-        const icon = document.createElement('span');
-        icon.className = 'mr-1 transition-transform';
-        icon.textContent = '📁';
-        header.appendChild(icon);
-        header.appendChild(document.createTextNode(dir));
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'ml-4 mt-1 space-y-1 hidden';
-        header.onclick = ()=>{
-          contentDiv.classList.toggle('hidden');
-          icon.classList.toggle('rotate-90');
+        const group = document.createElement('div');
+        group.className = 'select-none';
+
+        const head = document.createElement('button');
+        head.className = 'w-full flex items-center gap-2 text-left text-[11px] uppercase tracking-wide text-slate-500 dark:text-slate-400';
+        head.innerHTML = `<span>${icons.folder}</span><span>${dir}</span><span class="ml-auto"><svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span>`;
+
+        const content = document.createElement('div');
+        content.className = 'mt-2 ml-6 space-y-1';
+
+        let open = true;
+        head.onclick = ()=> {
+          open = !open;
+          content.classList.toggle('hidden', !open);
+          head.querySelector('svg').classList.toggle('rotate-180', !open);
         };
-        wrapper.appendChild(header);
 
         tree[dir].sort().forEach(p=>{
           const a = document.createElement('a');
           a.href = '#'+encodeURIComponent(p);
-          a.textContent = '📄 ' + titleFromPath(p);
-          a.className = 'block px-3 py-1.5 rounded text-sm text-slate-300 hover:text-white hover:bg-slate-700 transition-colors';
           a.dataset.path = p;
-          contentDiv.appendChild(a);
+          a.className = 'flex items-center gap-2 px-2 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors';
+          a.innerHTML = `${icons.file}<span class="truncate">${titleFromPath(p)}</span>`;
+          content.appendChild(a);
         });
-        wrapper.appendChild(contentDiv);
-        list.appendChild(wrapper);
-      });
 
-      // root files
-      if(tree['']){
-        tree[''].sort().forEach(p=>{
-          const a = document.createElement('a');
-          a.href = '#'+encodeURIComponent(p);
-          a.textContent = '📄 ' + titleFromPath(p);
-          a.className = 'block px-3 py-1.5 rounded text-sm text-slate-300 hover:text-white hover:bg-slate-700 transition-colors';
-          a.dataset.path = p;
-          list.appendChild(a);
-        });
-      }
+        group.appendChild(head);
+        group.appendChild(content);
+        container.appendChild(group);
+      });
       highlightActive();
     }
 
-    function highlightActive(){
-      const hash = decodeURIComponent(location.hash.replace(/^#/,''));
-      $('#list').querySelectorAll('a').forEach(a=>{
-        a.classList.toggle('active', a.dataset.path===hash);
-      });
-    }
-
+    // —— Utils    // —— Load Markdown
     async function loadMD(p){
       $('#crumb').textContent = p;
-      $('#content').innerHTML = '<div class="flex items-center justify-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div></div>';
+      $('#content').innerHTML = `
+        <div class="flex items-center justify-center py-12">
+          <svg class="w-6 h-6 animate-spin text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+          <span class="ml-2 text-sm text-slate-500 dark:text-slate-400">Memuat…</span>
+        </div>`;
+      setBaseFor(p);
       try{
         const res = await fetch(p, {cache:'no-store'});
         if(!res.ok) throw new Error('HTTP '+res.status);
         const md = await res.text();
-        const html = marked.parse(md, {mangle:false, headerIds:true, breaks:true, gfm:true});
+
+        const html = marked.parse(md);
         $('#content').innerHTML = html;
+
+        // highlight code blocks
         $('#content').querySelectorAll('pre code').forEach(b=>hljs.highlightElement(b));
+        // task list read-only
+        $('#content').querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.disabled = true);
 
-        // Back to top button
-        const backToTop = document.createElement('button');
-        backToTop.textContent = '⬆️ Top';
-        backToTop.className = 'fixed bottom-4 left-4 bg-indigo-600 text-white px-3 py-2 rounded-full shadow-lg hover:bg-indigo-700 transition-colors opacity-0 pointer-events-none';
-        backToTop.id = 'backToTop';
-        document.body.appendChild(backToTop);
-        window.addEventListener('scroll', ()=>{
-          backToTop.classList.toggle('opacity-100', window.scrollY > 300);
-          backToTop.classList.toggle('pointer-events-auto', window.scrollY > 300);
+        // tombol copy pada blok kode
+        $('#content').querySelectorAll('pre').forEach((pre)=>{
+          const code = pre.querySelector('code'); if(!code) return;
+          const btn = document.createElement('button');
+          btn.className = 'absolute top-2 right-2 text-xs rounded border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-slate-800/90 px-2 py-1 hover:bg-slate-50 dark:hover:bg-slate-800';
+          btn.textContent = 'Copy';
+          pre.style.position = 'relative';
+          pre.appendChild(btn);
+          btn.addEventListener('click', async ()=>{
+            try { await navigator.clipboard.writeText(code.textContent); btn.textContent='Copied ✓'; setTimeout(()=>btn.textContent='Copy',1200);} catch(e){}
+          });
         });
-        backToTop.onclick = ()=>window.scrollTo({top:0, behavior:'smooth'});
 
-        $('#content').querySelectorAll('pre').forEach(pre=>{
-          const code = pre.querySelector('code');
-          if(code){
-            const btn = document.createElement('button');
-            btn.textContent = '📋 Copy';
-            btn.className = 'absolute top-2 right-2 bg-slate-700 text-slate-200 px-2 py-1 rounded text-xs hover:bg-slate-600 transition-all opacity-75 hover:opacity-100';
-            btn.onclick = async ()=>{
-              try{
-                await navigator.clipboard.writeText(code.textContent);
-                btn.textContent = '✅ Copied';
-                setTimeout(()=>btn.textContent='📋 Copy',2000);
-              }catch(e){
-                alert('Failed to copy');
-              }
-            };
-            pre.style.position = 'relative';
-            pre.appendChild(btn);
-          }
-        });
       }catch(e){
-        $('#content').innerHTML = `<div class="text-red-400 text-center py-8">Gagal memuat <code>${p}</code>: ${e.message}</div>`;
+        $('#content').innerHTML = `<div class="m-4 p-4 rounded-lg border border-red-200/60 dark:border-red-400/30 bg-red-50/60 dark:bg-red-950/30 text-red-700 dark:text-red-300">
+          Gagal memuat <code class="font-mono">${p}</code>: ${e.message}
+        </div>`;
       }
     }
 
+    // —— Router
     function router(){
       const hash = decodeURIComponent(location.hash.replace(/^#/,''));
       const target = hash || MANIFEST.defaultDoc || MANIFEST.files[0];
@@ -193,53 +293,117 @@
       }
     }
 
-    async function init(){
-      const res = await fetch('manifest.json', {cache:'no-store'});
-      if(!res.ok){ $('#content').textContent='manifest.json tidak ditemukan.'; return; }
-      MANIFEST = await res.json();
-      // Normalize manifest: produce MANIFEST.files as flat array without leading slash
-      function treeToFiles(tree){
-        const out = [];
-        (tree || []).forEach(node => {
-          if(node.type === 'file'){
-            const p = node.path?.startsWith('/') ? node.path.slice(1) : node.path;
-            out.push(p);
-          } else if(node.children){
-            out.push(...treeToFiles(node.children));
-          }
+    // —— Search
+    function attachSearch(){
+      const inputs = [$('#search')];
+      inputs.forEach(inp=>{
+        inp?.addEventListener('input', e=>{
+          const q = e.target.value.trim().toLowerCase();
+          FILTERED = MANIFEST.files.filter(p=>p.toLowerCase().includes(q));
+          renderListInto($('#list'), FILTERED);
+          renderListInto($('#listMobile'), FILTERED);
         });
-        return out;
-      }
-      if(!Array.isArray(MANIFEST.files)){
-        MANIFEST.files = treeToFiles(MANIFEST.tree || []);
-      } else {
-        // normalize existing files
-        MANIFEST.files = MANIFEST.files.map(p => p?.startsWith('/') ? p.slice(1) : p);
-      }
-      // normalize defaultDoc as well (remove leading slash)
-      if(MANIFEST.defaultDoc && MANIFEST.defaultDoc.startsWith('/')) MANIFEST.defaultDoc = MANIFEST.defaultDoc.slice(1);
-
-      $('#meta').textContent = `Generated: ${new Date(MANIFEST.generatedAt).toLocaleString()}`;
-      FILTERED = MANIFEST.files.slice();
-      renderList(FILTERED);
-      window.addEventListener('hashchange', router);
-      router();
-
-      $('#search').addEventListener('input', e=>{
-        const q = e.target.value.trim().toLowerCase();
-        FILTERED = MANIFEST.files.filter(p=>p.toLowerCase().includes(q));
-        renderList(FILTERED);
       });
+    }
 
-      // Theme toggle
-      const themeToggle = $('#themeToggle');
-      let isDark = true;
-      themeToggle.onclick = ()=>{
-        isDark = !isDark;
-        document.body.className = isDark ? 'bg-slate-950 text-slate-200' : 'bg-white text-gray-900';
-        themeToggle.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
-        // Update colors accordingly, but for simplicity, keep dark as primary
+    // —— Theme
+    const prefersDark = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    function applyTheme(dark){
+      document.documentElement.classList.toggle('dark', dark);
+      $('#hljs-theme-dark').disabled = !dark;
+      $('#hljs-theme-light').disabled = dark;
+      $('#icon-sun').classList.toggle('hidden', !dark);
+      $('#icon-moon').classList.toggle('hidden', dark);
+    }
+
+    // —— Reading progress + back-to-top
+    function attachReadingUX(){
+      const main = document.querySelector('main');
+      function onScroll(){
+        const el = $('#content');
+        if(!el) return;
+        const total = el.scrollHeight - main.clientHeight;
+        const current = main.scrollTop;
+        const pct = Math.max(0, Math.min(1, total ? current/total : 0));
+        $('#progress').style.width = (pct*100).toFixed(2) + '%';
+
+        const btn = $('#backToTop');
+        const show = current > 300;
+        btn.classList.toggle('opacity-100', show);
+        btn.classList.toggle('pointer-events-auto', show);
+      }
+      main.addEventListener('scroll', onScroll, {passive:true});
+      $('#backToTop').onclick = ()=> main.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    // —— Mobile drawers handlers
+    function attachDrawers(){
+      const navDrawer  = $('#navDrawer');
+      const navOverlay = $('#navOverlay');
+      const btnOpenNav = $('#btnOpenNav');
+      const btnCloseNav= $('#btnCloseNav');
+
+      const open = el => { el.classList.remove('hidden'); document.body.style.overflow='hidden'; }
+      const close = el => { el.classList.add('hidden'); document.body.style.overflow=''; }
+
+      btnOpenNav?.addEventListener('click', ()=> open(navDrawer));
+      btnCloseNav?.addEventListener('click', ()=> close(navDrawer));
+      navOverlay?.addEventListener('click', ()=> close(navDrawer));
+    }
+
+    // —— Init
+    async function init(){
+      // theme init
+      const saved = localStorage.getItem('theme');
+      applyTheme(saved ? saved === 'dark' : prefersDark());
+      $('#themeToggle').onclick = ()=>{
+        const dark = !document.documentElement.classList.contains('dark');
+        applyTheme(dark);
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
       };
+
+      try{
+        const res = await fetch('manifest.json', {cache:'no-store'});
+        if(!res.ok){ $('#content').textContent='manifest.json tidak ditemukan.'; return; }
+        MANIFEST = await res.json();
+
+        function treeToFiles(tree){
+          const out = [];
+          (tree || []).forEach(node => {
+            if(node.type === 'file'){
+              const p = node.path?.startsWith('/') ? node.path.slice(1) : node.path;
+              if(/\.md$/i.test(p)) out.push(p);
+            } else if(node.children){
+              out.push(...treeToFiles(node.children));
+            }
+          });
+          return out;
+        }
+
+        if(!Array.isArray(MANIFEST.files)){
+          MANIFEST.files = treeToFiles(MANIFEST.tree || []);
+        } else {
+          MANIFEST.files = MANIFEST.files.map(p => p?.startsWith('/') ? p.slice(1) : p).filter(p => /\.md$/i.test(p));
+        }
+        if(MANIFEST.defaultDoc && MANIFEST.defaultDoc.startsWith('/')) MANIFEST.defaultDoc = MANIFEST.defaultDoc.slice(1);
+
+        const gen = MANIFEST.generatedAt ? new Date(MANIFEST.generatedAt).toLocaleString() : '—';
+        $('#meta').textContent = `Generated: ${gen}`;
+        $('#metaMobile').textContent = `Generated: ${gen}`;
+
+        FILTERED = MANIFEST.files.slice();
+        renderListInto($('#list'), FILTERED);
+        renderListInto($('#listMobile'), FILTERED);
+        attachSearch();
+        attachReadingUX();
+        attachDrawers();
+
+        window.addEventListener('hashchange', router, {passive:true});
+        router();
+
+      }catch(e){
+        $('#content').textContent = 'Gagal inisialisasi: '+ e.message;
+      }
     }
     init();
   </script>
