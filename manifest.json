@@ -1,415 +1,63 @@
 {
-  "generatedAt": "2025-10-02T22:55:00.890Z",
-  "root": "/content/",
-  "defaultDoc": "content/README.md",
-  "tree": [
-    {
-      "type": "dir",
-      "name": "ai-tools",
-      "path": "content/ai-tools/",
-      "children": [
-        {
-          "type": "file",
-          "name": "prompt-engineering-tutorial.md",
-          "path": "content/ai-tools/prompt-engineering-tutorial.md",
-          "title": "Prompt engineering tutorial"
-        },
-        {
-          "type": "file",
-          "name": "searching-tutorial.md",
-          "path": "content/ai-tools/searching-tutorial.md",
-          "title": "Searching tutorial"
-        }
-      ],
-      "title": "ai-tools"
-    },
-    {
-      "type": "dir",
-      "name": "electron-js",
-      "path": "content/electron-js/",
-      "children": [
-        {
-          "type": "file",
-          "name": "build-multiplatform.md",
-          "path": "content/electron-js/build-multiplatform.md",
-          "title": "Build multiplatform"
-        },
-        {
-          "type": "file",
-          "name": "instalasi-project.md",
-          "path": "content/electron-js/instalasi-project.md",
-          "title": "Instalasi project"
-        },
-        {
-          "type": "file",
-          "name": "ipc-preload-main.md",
-          "path": "content/electron-js/ipc-preload-main.md",
-          "title": "Ipc preload main"
-        },
-        {
-          "type": "file",
-          "name": "prerequisite.md",
-          "path": "content/electron-js/prerequisite.md",
-          "title": "Prerequisite"
-        },
-        {
-          "type": "file",
-          "name": "sqlite-database.md",
-          "path": "content/electron-js/sqlite-database.md",
-          "title": "Sqlite database"
-        },
-        {
-          "type": "file",
-          "name": "struktur-folder.md",
-          "path": "content/electron-js/struktur-folder.md",
-          "title": "Struktur folder"
-        }
-      ],
-      "title": "electron-js"
-    },
-    {
-      "type": "dir",
-      "name": "git",
-      "path": "content/git/",
-      "children": [
-        {
-          "type": "file",
-          "name": "best-practices.md",
-          "path": "content/git/best-practices.md",
-          "title": "Best practices"
-        },
-        {
-          "type": "file",
-          "name": "git-tutorial.md",
-          "path": "content/git/git-tutorial.md",
-          "title": "Git tutorial"
-        },
-        {
-          "type": "file",
-          "name": "gitignore-examples.md",
-          "path": "content/git/gitignore-examples.md",
-          "title": "Gitignore examples"
-        },
-        {
-          "type": "file",
-          "name": "team-workflow.md",
-          "path": "content/git/team-workflow.md",
-          "title": "Team workflow"
-        },
-        {
-          "type": "file",
-          "name": "troubleshooting.md",
-          "path": "content/git/troubleshooting.md",
-          "title": "Troubleshooting"
-        }
-      ],
-      "title": "git"
-    },
-    {
-      "type": "dir",
-      "name": "laravel",
-      "path": "content/laravel/",
-      "children": [
-        {
-          "type": "file",
-          "name": "flow-development.md",
-          "path": "content/laravel/flow-development.md",
-          "title": "Flow development"
-        },
-        {
-          "type": "file",
-          "name": "instalasi-project.md",
-          "path": "content/laravel/instalasi-project.md",
-          "title": "Instalasi project"
-        },
-        {
-          "type": "file",
-          "name": "prerequisite.md",
-          "path": "content/laravel/prerequisite.md",
-          "title": "Prerequisite"
-        },
-        {
-          "type": "file",
-          "name": "start-project.md",
-          "path": "content/laravel/start-project.md",
-          "title": "Start project"
-        },
-        {
-          "type": "file",
-          "name": "struktur-folder.md",
-          "path": "content/laravel/struktur-folder.md",
-          "title": "Struktur folder"
-        }
-      ],
-      "title": "laravel"
-    },
-    {
-      "type": "dir",
-      "name": "nodejs-api",
-      "path": "content/nodejs-api/",
-      "children": [
-        {
-          "type": "file",
-          "name": "authentication.md",
-          "path": "content/nodejs-api/authentication.md",
-          "title": "Authentication"
-        },
-        {
-          "type": "file",
-          "name": "controllers.md",
-          "path": "content/nodejs-api/controllers.md",
-          "title": "Controllers"
-        },
-        {
-          "type": "file",
-          "name": "database-config.md",
-          "path": "content/nodejs-api/database-config.md",
-          "title": "Database config"
-        },
-        {
-          "type": "file",
-          "name": "deployment.md",
-          "path": "content/nodejs-api/deployment.md",
-          "title": "Deployment"
-        },
-        {
-          "type": "file",
-          "name": "express-setup.md",
-          "path": "content/nodejs-api/express-setup.md",
-          "title": "Express setup"
-        },
-        {
-          "type": "file",
-          "name": "models-migrations.md",
-          "path": "content/nodejs-api/models-migrations.md",
-          "title": "Models migrations"
-        },
-        {
-          "type": "file",
-          "name": "prerequisite.md",
-          "path": "content/nodejs-api/prerequisite.md",
-          "title": "Prerequisite"
-        },
-        {
-          "type": "file",
-          "name": "routes.md",
-          "path": "content/nodejs-api/routes.md",
-          "title": "Routes"
-        },
-        {
-          "type": "file",
-          "name": "setup-project.md",
-          "path": "content/nodejs-api/setup-project.md",
-          "title": "Setup project"
-        },
-        {
-          "type": "file",
-          "name": "testing.md",
-          "path": "content/nodejs-api/testing.md",
-          "title": "Testing"
-        }
-      ],
-      "title": "nodejs-api"
-    },
-    {
-      "type": "dir",
-      "name": "react-js",
-      "path": "content/react-js/",
-      "children": [
-        {
-          "type": "dir",
-          "name": "js",
-          "path": "content/react-js/js/",
-          "children": [
-            {
-              "type": "file",
-              "name": "build-web.md",
-              "path": "content/react-js/js/build-web.md",
-              "title": "Build web"
-            },
-            {
-              "type": "file",
-              "name": "clean-project.md",
-              "path": "content/react-js/js/clean-project.md",
-              "title": "Clean project"
-            },
-            {
-              "type": "file",
-              "name": "electron-integration.md",
-              "path": "content/react-js/js/electron-integration.md",
-              "title": "Electron integration"
-            },
-            {
-              "type": "file",
-              "name": "instalasi-project.md",
-              "path": "content/react-js/js/instalasi-project.md",
-              "title": "Instalasi project"
-            },
-            {
-              "type": "file",
-              "name": "prerequisite.md",
-              "path": "content/react-js/js/prerequisite.md",
-              "title": "Prerequisite"
-            },
-            {
-              "type": "file",
-              "name": "start-project.md",
-              "path": "content/react-js/js/start-project.md",
-              "title": "Start project"
-            },
-            {
-              "type": "file",
-              "name": "struktur-folder.md",
-              "path": "content/react-js/js/struktur-folder.md",
-              "title": "Struktur folder"
-            }
-          ],
-          "title": "js"
-        },
-        {
-          "type": "dir",
-          "name": "ts",
-          "path": "content/react-js/ts/",
-          "children": [
-            {
-              "type": "file",
-              "name": "build-web.md",
-              "path": "content/react-js/ts/build-web.md",
-              "title": "Build web"
-            },
-            {
-              "type": "file",
-              "name": "clean-project.md",
-              "path": "content/react-js/ts/clean-project.md",
-              "title": "Clean project"
-            },
-            {
-              "type": "file",
-              "name": "electron-integration.md",
-              "path": "content/react-js/ts/electron-integration.md",
-              "title": "Electron integration"
-            },
-            {
-              "type": "file",
-              "name": "instalasi-project.md",
-              "path": "content/react-js/ts/instalasi-project.md",
-              "title": "Instalasi project"
-            },
-            {
-              "type": "file",
-              "name": "prerequisite.md",
-              "path": "content/react-js/ts/prerequisite.md",
-              "title": "Prerequisite"
-            },
-            {
-              "type": "file",
-              "name": "start-project.md",
-              "path": "content/react-js/ts/start-project.md",
-              "title": "Start project"
-            },
-            {
-              "type": "file",
-              "name": "struktur-folder.md",
-              "path": "content/react-js/ts/struktur-folder.md",
-              "title": "Struktur folder"
-            }
-          ],
-          "title": "ts"
-        }
-      ],
-      "title": "react-js"
-    },
-    {
-      "type": "dir",
-      "name": "react-native",
-      "path": "content/react-native/",
-      "children": [
-        {
-          "type": "file",
-          "name": "build-application.md",
-          "path": "content/react-native/build-application.md",
-          "title": "Build application"
-        },
-        {
-          "type": "file",
-          "name": "clean-project.md",
-          "path": "content/react-native/clean-project.md",
-          "title": "Clean project"
-        },
-        {
-          "type": "file",
-          "name": "debugging-troubleshooting.md",
-          "path": "content/react-native/debugging-troubleshooting.md",
-          "title": "Debugging troubleshooting"
-        },
-        {
-          "type": "file",
-          "name": "instalasi-project.md",
-          "path": "content/react-native/instalasi-project.md",
-          "title": "Instalasi project"
-        },
-        {
-          "type": "file",
-          "name": "navigation-state-management.md",
-          "path": "content/react-native/navigation-state-management.md",
-          "title": "Navigation state management"
-        },
-        {
-          "type": "file",
-          "name": "prebuild-setup.md",
-          "path": "content/react-native/prebuild-setup.md",
-          "title": "Prebuild setup"
-        },
-        {
-          "type": "file",
-          "name": "prerequisite.md",
-          "path": "content/react-native/prerequisite.md",
-          "title": "Prerequisite"
-        },
-        {
-          "type": "file",
-          "name": "recreate-folders.md",
-          "path": "content/react-native/recreate-folders.md",
-          "title": "Recreate folders"
-        },
-        {
-          "type": "file",
-          "name": "start-project.md",
-          "path": "content/react-native/start-project.md",
-          "title": "Start project"
-        },
-        {
-          "type": "file",
-          "name": "struktur-folder.md",
-          "path": "content/react-native/struktur-folder.md",
-          "title": "Struktur folder"
-        },
-        {
-          "type": "file",
-          "name": "update-android-api.md",
-          "path": "content/react-native/update-android-api.md",
-          "title": "Update android api"
-        },
-        {
-          "type": "file",
-          "name": "update-react-native.md",
-          "path": "content/react-native/update-react-native.md",
-          "title": "Update react native"
-        }
-      ],
-      "title": "react-native"
-    },
-    {
-      "type": "file",
-      "name": "getting-started.md",
-      "path": "content/getting-started.md",
-      "title": "Getting started"
-    },
-    {
-      "type": "file",
-      "name": "README.md",
-      "path": "content/README.md",
-      "title": "README"
-    }
+  "generatedAt": "2025-10-02T22:55:38.675Z",
+  "defaultDoc": "README.md",
+  "files": [
+    "content/ai-tools/prompt-engineering-tutorial.md",
+    "content/ai-tools/searching-tutorial.md",
+    "content/electron-js/build-multiplatform.md",
+    "content/electron-js/instalasi-project.md",
+    "content/electron-js/ipc-preload-main.md",
+    "content/electron-js/prerequisite.md",
+    "content/electron-js/sqlite-database.md",
+    "content/electron-js/struktur-folder.md",
+    "content/getting-started.md",
+    "content/git/best-practices.md",
+    "content/git/git-tutorial.md",
+    "content/git/gitignore-examples.md",
+    "content/git/team-workflow.md",
+    "content/git/troubleshooting.md",
+    "content/laravel/flow-development.md",
+    "content/laravel/instalasi-project.md",
+    "content/laravel/prerequisite.md",
+    "content/laravel/start-project.md",
+    "content/laravel/struktur-folder.md",
+    "content/nodejs-api/authentication.md",
+    "content/nodejs-api/controllers.md",
+    "content/nodejs-api/database-config.md",
+    "content/nodejs-api/deployment.md",
+    "content/nodejs-api/express-setup.md",
+    "content/nodejs-api/models-migrations.md",
+    "content/nodejs-api/prerequisite.md",
+    "content/nodejs-api/routes.md",
+    "content/nodejs-api/setup-project.md",
+    "content/nodejs-api/testing.md",
+    "content/react-js/js/build-web.md",
+    "content/react-js/js/clean-project.md",
+    "content/react-js/js/electron-integration.md",
+    "content/react-js/js/instalasi-project.md",
+    "content/react-js/js/prerequisite.md",
+    "content/react-js/js/start-project.md",
+    "content/react-js/js/struktur-folder.md",
+    "content/react-js/ts/build-web.md",
+    "content/react-js/ts/clean-project.md",
+    "content/react-js/ts/electron-integration.md",
+    "content/react-js/ts/instalasi-project.md",
+    "content/react-js/ts/prerequisite.md",
+    "content/react-js/ts/start-project.md",
+    "content/react-js/ts/struktur-folder.md",
+    "content/react-native/build-application.md",
+    "content/react-native/clean-project.md",
+    "content/react-native/debugging-troubleshooting.md",
+    "content/react-native/instalasi-project.md",
+    "content/react-native/navigation-state-management.md",
+    "content/react-native/prebuild-setup.md",
+    "content/react-native/prerequisite.md",
+    "content/react-native/recreate-folders.md",
+    "content/react-native/start-project.md",
+    "content/react-native/struktur-folder.md",
+    "content/react-native/update-android-api.md",
+    "content/react-native/update-react-native.md",
+    "content/README.md",
+    "README.md"
   ]
 }
